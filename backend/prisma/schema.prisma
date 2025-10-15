@@ -1,0 +1,71 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int        @id @default(autoincrement())
+  stravaId          String     @unique
+  accessToken       String
+  refreshToken      String
+  tokenExpiresAt    DateTime
+  
+  // Profile info
+  firstName         String
+  lastName          String
+  username          String?
+  city              String?
+  country           String?
+  profilePicture    String?
+  
+  // Metadata
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  lastSyncAt        DateTime?
+  
+  // Relations
+  activities        Activity[]
+  
+  @@map("users")
+}
+
+model Activity {
+  id                Int        @id @default(autoincrement())
+  stravaActivityId  String     @unique
+  userId            Int
+  
+  // Activity details
+  name              String
+  type              String     // Run, TrailRun, VirtualRun
+  distance          Float      // in meters
+  movingTime        Int        // in seconds
+  elapsedTime       Int        // in seconds
+  totalElevationGain Float?    // in meters
+  startDate         DateTime
+  startDateLocal    DateTime
+  timezone          String?
+  
+  // Performance
+  averageSpeed      Float?     // m/s
+  maxSpeed          Float?     // m/s
+  averageHeartrate  Float?
+  maxHeartrate      Float?
+  
+  // Metadata
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  
+  // Relations
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([startDate])
+  @@index([type])
+  @@map("activities")
+}
