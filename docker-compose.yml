@@ -42,9 +42,7 @@ services:
         condition: service_healthy
     networks:
       - strava_network
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
+    # Do not mount source over /app in production, to keep built dist
 
   frontend:
     build:
