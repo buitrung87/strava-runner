@@ -19,7 +19,7 @@ RUN npx prisma generate
 COPY . .
 
 # Build TypeScript
-RUN npm run build
+RUN npm run build && ls -la dist/
 
 # Expose port
 EXPOSE 3001
