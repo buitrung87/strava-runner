@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { AuthenticatedRequest } from '../types';
 
 export class AuthController {
   /**
@@ -35,7 +34,7 @@ export class AuthController {
   /**
    * Get current user profile
    */
-  static async getProfile(req: AuthenticatedRequest, res: Response) {
+  static async getProfile(req: Request, res: Response) {
     try {
       const user = req.user!;
       

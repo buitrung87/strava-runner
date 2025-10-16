@@ -1,9 +1,5 @@
-import { Request } from 'express';
-import { User } from '@prisma/client';
-
-export interface AuthenticatedRequest extends Request {
-  user?: User;
-}
+// AuthenticatedRequest is now defined in express.d.ts to extend Express namespace
+// This avoids type conflicts with Express's built-in Request type
 
 export interface StravaTokenResponse {
   token_type: string;

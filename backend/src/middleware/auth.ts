@@ -1,10 +1,9 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { AuthenticatedRequest } from '../types';
 import prisma from '../config/database';
 
 export const authenticateToken = async (
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {

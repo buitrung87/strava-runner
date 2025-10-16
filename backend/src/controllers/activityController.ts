@@ -1,5 +1,5 @@
-import { Response } from 'express';
-import { AuthenticatedRequest, TimePeriod } from '../types';
+import { Request, Response } from 'express';
+import { TimePeriod } from '../types';
 import prisma from '../config/database';
 import { StravaService } from '../services/stravaService';
 
@@ -7,7 +7,7 @@ export class ActivityController {
   /**
    * Get user's activities with optional time period filter
    */
-  static async getActivities(req: AuthenticatedRequest, res: Response) {
+  static async getActivities(req: Request, res: Response) {
     try {
       const userId = req.user!.id;
       const period = (req.query.period as TimePeriod) || 'month';
@@ -74,7 +74,7 @@ export class ActivityController {
   /**
    * Sync activities from Strava
    */
-  static async syncActivities(req: AuthenticatedRequest, res: Response) {
+  static async syncActivities(req: Request, res: Response) {
     try {
       const userId = req.user!.id;
       
